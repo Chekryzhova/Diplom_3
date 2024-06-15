@@ -1,12 +1,8 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from pages.home_page import HomePage
 from pages.auth_page import AuthPage
 from pages.personal_account_page import PersonalAccountPage
-from locators.personal_account_page_locators import PersovalAccountPageLocators
-from locators.auth_page_locators import AuthPageLocators
-from selenium.webdriver.common.by import By
 import allure
+
 
 
 class TestPersonalAccount:
@@ -16,14 +12,14 @@ class TestPersonalAccount:
     def test_open_personal_account(self, user, driver):
         home_page = HomePage(driver)
         auth_page = AuthPage(driver)
+        personal_account_page = PersonalAccountPage(driver)
         home_page.click_login_to_account_button()
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.click_personal_account_button()
-        profile = (WebDriverWait(driver, 15).until(
-            EC.visibility_of_element_located(PersovalAccountPageLocators.TITLE_PROFILE)))
+        profile = personal_account_page.wait_visibility_title_profile()
 
         assert profile.is_displayed()
 
@@ -38,13 +34,12 @@ class TestPersonalAccount:
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.click_personal_account_button()
-        WebDriverWait(driver, 15).until(
-            EC.visibility_of_element_located(PersovalAccountPageLocators.ORDER_HISTORY))
+        personal_account_page.wait_visibility_title_profile()
         personal_account_page.click_order_history()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/account/profile'))
-        order_history = driver.find_element(By.XPATH, "//a[contains(@class, 'Account_link_active__2opc9')]")
+        personal_account_page.wait_changing_url_from_profile_page()
+        order_history = personal_account_page.find_order_history_select()
 
         assert order_history.is_displayed()
 
@@ -59,12 +54,11 @@ class TestPersonalAccount:
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.click_personal_account_button()
-        WebDriverWait(driver, 15).until(
-            EC.visibility_of_element_located(PersovalAccountPageLocators.ORDER_HISTORY))
+        personal_account_page.wait_visibility_title_profile()
         personal_account_page.click_logout_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/account/profile'))
-        entrance = driver.find_element(*AuthPageLocators.LOGIN_BUTTON)
+        personal_account_page.wait_changing_url_from_profile_page()
+        entrance = auth_page.find_login_button()
 
         assert entrance.is_displayed()

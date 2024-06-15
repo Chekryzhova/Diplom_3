@@ -1,1 +1,3 @@
-BURGER = 'https://stellarburgers.nomoreparties.site/'
+BURGER = 'https://stellarburgers.nomoreparties.site'
+LOGIN = '/login'
+PROFILE = '/account/profile'

@@ -1,12 +1,7 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
 from pages.auth_page import AuthPage
 from pages.personal_account_page import PersonalAccountPage
-from locators.order_page_locators import OrderPageLocators
-from locators.home_page_locators import HomePageLocators
-from locators.personal_account_page_locators import PersovalAccountPageLocators
 import allure
 
 class TestOrderPage:
@@ -17,9 +12,9 @@ class TestOrderPage:
         home_page = HomePage(driver)
         order_page = OrderPage(driver)
         home_page.click_feed_order()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
+        home_page.wait_order_feed_header()
         order_page.click_first_order()
-        close_button = (WebDriverWait(driver, 10).until(EC.visibility_of_element_located(OrderPageLocators.CLOSE_ORDER_INFO_BUTTON)))
+        close_button = order_page.wait_close_order_info_button()
 
         assert close_button.is_displayed()
 
@@ -35,18 +30,18 @@ class TestOrderPage:
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.add_ingredient_to_order()
         home_page.click_create_order_button()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(HomePageLocators.CLOSE_ORDER_POPUP))
+        home_page.wait_close_order_popup()
         home_page.close_order_popup()
         home_page.click_personal_account_button()
-        WebDriverWait(driver, 15).until(EC.visibility_of_element_located(PersovalAccountPageLocators.TITLE_PROFILE))
+        personal_account.wait_visibility_title_profile()
         personal_account.click_order_history()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(PersovalAccountPageLocators.ORDER_NUMBER))
+        personal_account.wait_order_number()
         order_number = personal_account.get_number_order()
         home_page.click_feed_order()
-        WebDriverWait(driver, 25).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
+        home_page.wait_order_feed_header()
         order_list = order_page.get_order_list()
 
         assert order_number in order_list
@@ -62,17 +57,17 @@ class TestOrderPage:
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.click_feed_order()
-        WebDriverWait(driver, 25).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
+        home_page.wait_order_feed_header()
         alltime_orders_before = order_page.get_counter_orders_for_alltime()
         home_page.click_stellarburger_logo()
         home_page.add_ingredient_to_order()
         home_page.click_create_order_button()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(HomePageLocators.CLOSE_ORDER_POPUP))
+        home_page.wait_close_order_popup()
         home_page.close_order_popup()
         home_page.click_feed_order()
-        WebDriverWait(driver, 25).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
+        home_page.wait_order_feed_header()
         alltime_orders_after = order_page.get_counter_orders_for_alltime()
 
         assert alltime_orders_before < alltime_orders_after
@@ -88,17 +83,17 @@ class TestOrderPage:
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.click_feed_order()
-        WebDriverWait(driver, 25).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
+        home_page.wait_order_feed_header()
         allday_orders_before = order_page.get_counter_orders_for_allday()
         home_page.click_stellarburger_logo()
         home_page.add_ingredient_to_order()
         home_page.click_create_order_button()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(HomePageLocators.CLOSE_ORDER_POPUP))
+        home_page.wait_close_order_popup()
         home_page.close_order_popup()
         home_page.click_feed_order()
-        WebDriverWait(driver, 25).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
+        home_page.wait_order_feed_header()
         allday_orders_after = order_page.get_counter_orders_for_allday()
 
         assert allday_orders_before < allday_orders_after
@@ -115,19 +110,19 @@ class TestOrderPage:
         auth_page.input_email_for_authorization()
         auth_page.input_password_for_authorization()
         auth_page.click_login_button()
-        WebDriverWait(driver, 10).until(EC.url_changes('https://stellarburgers.nomoreparties.site/login'))
+        auth_page.wait_changing_url_from_auth_page()
         home_page.add_ingredient_to_order()
         home_page.click_create_order_button()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(HomePageLocators.CLOSE_ORDER_POPUP))
+        home_page.wait_close_order_popup()
         home_page.close_order_popup()
         home_page.click_personal_account_button()
-        WebDriverWait(driver, 15).until(EC.visibility_of_element_located(PersovalAccountPageLocators.TITLE_PROFILE))
+        personal_account.wait_visibility_title_profile()
         personal_account.click_order_history()
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located(PersovalAccountPageLocators.ORDER_NUMBER))
+        personal_account.wait_order_number()
         order_number = personal_account.get_number_order()
         home_page.click_feed_order()
-        WebDriverWait(driver, 25).until(EC.visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING))
-        WebDriverWait(driver, 25).until(EC.invisibility_of_element_located(OrderPageLocators.NO_ORDERS_IN_WORK))
+        home_page.wait_order_feed_header()
+        order_page.wait_invisibility_no_orders_in_work()
         order_in_work = order_page.get_orders_in_work()
 
         assert order_number in order_in_work

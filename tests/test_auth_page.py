@@ -1,9 +1,5 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from pages.home_page import HomePage
 from pages.auth_page import AuthPage
-from locators.auth_page_locators import AuthPageLocators
 import allure
 
 
@@ -18,7 +14,7 @@ class TestAuthPage:
         auth_page.click_recovery_password_button()
         auth_page.input_email_for_recovery_password()
         auth_page.click_recovery_button()
-        save_button = driver.find_element(*AuthPageLocators.SAVE_BUTTON)
+        save_button = auth_page.find_save_button()
         assert save_button.is_displayed()
 
     @allure.title('Проверяем, что клик по кнопке показать/скрыть пароль делает поле активным')
@@ -30,8 +26,8 @@ class TestAuthPage:
         auth_page.click_recovery_password_button()
         auth_page.input_email_for_recovery_password()
         auth_page.click_recovery_button()
-        WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='password']")))
+        auth_page.wait_hide_password_button()
         auth_page.click_hide_password_button()
-        highlight_password_field = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(AuthPageLocators.HIGHLIGHTED_PASSWORD))
+        highlight_password_field = auth_page.wait_highlight_password_field()
 
         assert highlight_password_field.is_displayed()

@@ -10,6 +10,8 @@ class AuthPageLocators:
     LOGIN_EMAIL_INPUT = (By.XPATH, "//input[@name = 'name']")
     LOGIN_PASSWORD_INPUT = (By.XPATH, ".//input[@name = 'Пароль']")
     LOGIN_BUTTON = (By.XPATH, "//button[text() = 'Войти']")
+    HIDE_PASSWORD_BUTTON = (By.XPATH, "//input[@type='password']")
+
 
 
 

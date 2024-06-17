@@ -15,7 +15,7 @@ class OrderPage(BasePage):
     @allure.step('Получаем весь список заказов')
     def get_order_list(self):
         return self.find_element(OrderPageLocators.ORDER_LIST).text
-        #return feed_order
+
 
     @allure.step('Получаем количество заказов за всё время')
     def get_counter_orders_for_alltime(self):
@@ -35,5 +35,9 @@ class OrderPage(BasePage):
     @allure.step('Ждём, когда надпись все текущие заказы готовы исчезнет')
     def wait_invisibility_no_orders_in_work(self):
         self.wait_invisibility_of_element_located(OrderPageLocators.NO_ORDERS_IN_WORK)
+
+    @allure.step('Ждём надпись лента заказов')
+    def wait_order_feed_header(self):
+        return self.wait_visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING)
 
 

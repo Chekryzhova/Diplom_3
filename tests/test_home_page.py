@@ -1,5 +1,6 @@
 from pages.home_page import HomePage
 from pages.auth_page import AuthPage
+from pages.order_page import OrderPage
 import allure
 
 
@@ -30,8 +31,9 @@ class TestHomePage:
     @allure.description('Нажимаем на кнопку "Лента заказов" на главной странице и проверяем, что открылась лента заказов')
     def test_click_feed_order(self, driver):
         home_page = HomePage(driver)
+        order_page = OrderPage(driver)
         home_page.click_feed_order()
-        feed = home_page.wait_order_feed_header()
+        feed = order_page.wait_order_feed_header()
 
         assert feed.is_displayed()
 

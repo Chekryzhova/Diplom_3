@@ -12,7 +12,7 @@ class TestOrderPage:
         home_page = HomePage(driver)
         order_page = OrderPage(driver)
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         order_page.click_first_order()
         close_button = order_page.wait_close_order_info_button()
 
@@ -41,7 +41,7 @@ class TestOrderPage:
         personal_account.wait_order_number()
         order_number = personal_account.get_number_order()
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         order_list = order_page.get_order_list()
 
         assert order_number in order_list
@@ -59,7 +59,7 @@ class TestOrderPage:
         auth_page.click_login_button()
         auth_page.wait_changing_url_from_auth_page()
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         alltime_orders_before = order_page.get_counter_orders_for_alltime()
         home_page.click_stellarburger_logo()
         home_page.add_ingredient_to_order()
@@ -67,7 +67,7 @@ class TestOrderPage:
         home_page.wait_close_order_popup()
         home_page.close_order_popup()
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         alltime_orders_after = order_page.get_counter_orders_for_alltime()
 
         assert alltime_orders_before < alltime_orders_after
@@ -85,7 +85,7 @@ class TestOrderPage:
         auth_page.click_login_button()
         auth_page.wait_changing_url_from_auth_page()
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         allday_orders_before = order_page.get_counter_orders_for_allday()
         home_page.click_stellarburger_logo()
         home_page.add_ingredient_to_order()
@@ -93,7 +93,7 @@ class TestOrderPage:
         home_page.wait_close_order_popup()
         home_page.close_order_popup()
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         allday_orders_after = order_page.get_counter_orders_for_allday()
 
         assert allday_orders_before < allday_orders_after
@@ -121,7 +121,7 @@ class TestOrderPage:
         personal_account.wait_order_number()
         order_number = personal_account.get_number_order()
         home_page.click_feed_order()
-        home_page.wait_order_feed_header()
+        order_page.wait_order_feed_header()
         order_page.wait_invisibility_no_orders_in_work()
         order_in_work = order_page.get_orders_in_work()
 

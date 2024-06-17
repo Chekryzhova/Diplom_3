@@ -1,6 +1,5 @@
 from pages.base_page import BasePage
 from locators.home_page_locators import HomePageLocators
-from locators.order_page_locators import OrderPageLocators
 import allure
 
 
@@ -25,10 +24,6 @@ class HomePage(BasePage):
     @allure.step('Находим надпись собери бургер')
     def find_assemble_burger_text(self):
         return self.find_element(HomePageLocators.CONSTRUCTOR)
-
-    @allure.step('Ждём надпись лента заказов')
-    def wait_order_feed_header(self):
-        return self.wait_visibility_of_element_located(OrderPageLocators.ORDER_FEED_HEADING)
 
 
     @allure.step('Открываем окно с деталями ингредиента')
